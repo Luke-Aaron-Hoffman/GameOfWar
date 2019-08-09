@@ -19,3 +19,6 @@ C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\GameOfW
 C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\GameOfWar\obj\Debug\GameOfWar.csproj.CoreCompileInputs.cache
 C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\GameOfWar\obj\Debug\GameOfWar.exe
 C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\GameOfWar\obj\Debug\GameOfWar.pdb
+C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\Executable\GameOfWar.exe.config
+C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\Executable\GameOfWar.exe
+C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\Executable\GameOfWar.pdb
