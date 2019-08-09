@@ -21,11 +21,7 @@ namespace GameOfWar
         public Game()
         {
             Console.Out.WriteLine("Welcome to War!");
-            Console.Out.WriteLine("\nAll you have to do is any key to keep proceeding through the game. You will be Player 1, and the Computer will be Player 2. Good luck!");
-
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Out.WriteLine("Press a key when ready!");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.Out.WriteLine("\nAll you have to do is press any key to keep proceeding through the game. You will be Player 1, and the Computer will be Player 2. Good luck!");
 
             StartGame();
         }
@@ -61,6 +57,10 @@ namespace GameOfWar
 
         private void Upkeep()
         {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Out.WriteLine("Press a key to continue...");
+            Console.ForegroundColor = ConsoleColor.White;
+
             Console.ReadKey();
             Console.Clear();
             turns++;
@@ -123,6 +123,13 @@ namespace GameOfWar
                 //No official ruling, will thus assume that if starting a new war and the player runs out of cards, they'll use the last card drawn, but if that results in a tie they will lose
                 Console.Out.WriteLine("WAR HAS BEEN DECLARED!");
                 War();
+            }
+            //This just displays who ran out of cards during a war
+            //in particular, this else statement happens when the currently pulled cards are equal AND someone's deck is empty
+            else
+            {
+                String player = (player1.getLibrary().Count > 0) ? "Player 2" : "Player 1";
+                Console.Out.WriteLine($"{player} has run out of cards and is unable to commence war.");
             }
 
             Console.WriteLine($"P1: {player1.getLibrary().Count} cards\tP2: {player2.getLibrary().Count} cards");
