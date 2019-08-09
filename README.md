@@ -1,6 +1,8 @@
 # GameOfWar
 The playing card game War created in C#
 
+To player, the .exe is located here: https://github.com/Luke-Aaron-Hoffman/GameOfWar/tree/master/GameOfWar/bin/Debug
+
 # Pictures
 The images located in this GitHub show examples of some non-obvious behavior in the code.
 
