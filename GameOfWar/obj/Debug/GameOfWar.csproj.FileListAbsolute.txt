@@ -1,0 +1,7 @@
+C:\Users\Luke\source\repos\GameOfWar\GameOfWar\bin\Debug\GameOfWar.exe.config
+C:\Users\Luke\source\repos\GameOfWar\GameOfWar\bin\Debug\GameOfWar.exe
+C:\Users\Luke\source\repos\GameOfWar\GameOfWar\bin\Debug\GameOfWar.pdb
+C:\Users\Luke\source\repos\GameOfWar\GameOfWar\obj\Debug\GameOfWar.csprojAssemblyReference.cache
+C:\Users\Luke\source\repos\GameOfWar\GameOfWar\obj\Debug\GameOfWar.csproj.CoreCompileInputs.cache
+C:\Users\Luke\source\repos\GameOfWar\GameOfWar\obj\Debug\GameOfWar.exe
+C:\Users\Luke\source\repos\GameOfWar\GameOfWar\obj\Debug\GameOfWar.pdb
