@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
 
 namespace GameOfWar
 {
@@ -64,17 +63,17 @@ namespace GameOfWar
                     face += "\u2666";
                     break;
                 case Suit.Spades:
-                    suitColor = Convert.ToBoolean(ConfigurationManager.AppSettings["classicColors"]) ? ConsoleColor.Black : ConsoleColor.Blue;
+                    suitColor = Properties.Settings.Default.classicColors ? ConsoleColor.Black : ConsoleColor.Blue;
                     //suitColor = ConsoleColor.Cyan;
                     face += "\u2660";
                     break;
                 case Suit.Hearts:
-                    suitColor = Convert.ToBoolean(ConfigurationManager.AppSettings["classicColors"]) ? ConsoleColor.Red : ConsoleColor.Magenta;
+                    suitColor = Properties.Settings.Default.classicColors ? ConsoleColor.Red : ConsoleColor.Magenta;
                     //suitColor = ConsoleColor.Magenta;
                     face += "\u2665";
                     break;
                 case Suit.Clubs:
-                    suitColor = Convert.ToBoolean(ConfigurationManager.AppSettings["classicColors"]) ? ConsoleColor.Black : ConsoleColor.DarkCyan;
+                    suitColor = Properties.Settings.Default.classicColors ? ConsoleColor.Black : ConsoleColor.DarkCyan;
                     //suitColor = ConsoleColor.DarkCyan;
                     face += "\u2663";
                     break;

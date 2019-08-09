@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
 
 namespace GameOfWar
 {
@@ -15,7 +14,7 @@ namespace GameOfWar
         {
             library = new Queue<Card>();
             List<Card> tempDeck = new List<Card>();
-            int aceHigh = Convert.ToInt32(ConfigurationManager.AppSettings["aceHigh"]);
+            int aceHigh = Properties.Settings.Default.aceHigh;
             aceHigh = (aceHigh >= 1) ? 1 : 0;
             //first foreach iterates through all enums (using the enums themselves)
             foreach(Suit s in (Suit[])Enum.GetValues(typeof(Suit)))

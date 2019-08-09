@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
 
 namespace GameOfWar
 {
     //Initially there was no Game class, and it was all handled in the main Program, but it became too cumbersome
     class Game
     {
-        private int warCount = Convert.ToInt32(ConfigurationManager.AppSettings["warCount"]);
-        private int turnCount = Convert.ToInt32(ConfigurationManager.AppSettings["turnCount"]);
+        private int warCount = Properties.Settings.Default.warCount;
+        private int turnCount = Properties.Settings.Default.turnCount;
         private int turns;
 
         private Deck deck;
