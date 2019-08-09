@@ -29,6 +29,7 @@ namespace GameOfWar
         private void StartGame()
         {
             deck = new Deck();
+            int deckSize = deck.getLibrary().Count;
             player1 = new Deck();
             player2 = new Deck();
             stack = new List<Card>();
@@ -39,14 +40,14 @@ namespace GameOfWar
             Queue<Card> deck1 = new Queue<Card>();
             Queue<Card> deck2 = new Queue<Card>();
 
-            //pops out the first 26 cards and puts them into deck1 (which will be assiend to player1)
-            for (int x = 0; x < 26; x++)
+            //pops out the first {getLibrary.Count/2} cards and puts them into deck1 (which will be assiend to player1)
+            for (int x = 0; x < deckSize/2; x++)
             {
                 deck1.Enqueue(deck.getLibrary().Dequeue());
             }
             player1.setLibrary(deck1);
-            //pops out the last 26 cards as before for deck1
-            for (int x = 0; x < 26; x++)
+            //pops out the last {getLibrary.Count/2} cards. This could cause errors if the deck size is odd, but there should never be an instance like that
+            for (int x = 0; x < deckSize/2; x++)
             {
                 deck2.Enqueue(deck.getLibrary().Dequeue());
             }
