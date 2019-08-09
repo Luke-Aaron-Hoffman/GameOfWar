@@ -7,6 +7,7 @@ Also remember to download the Config file. You can edit the values in here if yo
 
 # Pictures
 The images located in this GitHub show examples of some non-obvious behavior in the code. 
+
 NOTE: While they are from older versions of the game, they function the exact same way.
 
 ## Started a War With 1 Card Left
