@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace GameOfWar
 {
     //Initially there was no Game class, and it was all handled in the main Program, but it became too cumbersome
     class Game
     {
-        private const int warCount = 3;
-        private const int turnCount = 1000;
+        private int warCount = Convert.ToInt32(ConfigurationManager.AppSettings["warCount"]);
+        private int turnCount = Convert.ToInt32(ConfigurationManager.AppSettings["turnCount"]);
         private int turns;
 
         private Deck deck;
@@ -20,6 +21,8 @@ namespace GameOfWar
 
         public Game()
         {
+            warCount = warCount > 0 ? warCount : 3; //if warCount is 0 or less, it defaults to 3
+            turnCount = turnCount > 0 ? turnCount : 50; //...defaults to 50
             Console.Out.WriteLine("Welcome to War!");
             Console.Out.WriteLine("\nAll you have to do is press any key to keep proceeding through the game. You will be Player 1, and the Computer will be Player 2. Good luck!");
 
@@ -80,7 +83,7 @@ namespace GameOfWar
             }
             else
             {
-                Console.WriteLine("Player1\t\tPlayer2");
+                Console.WriteLine("Player1\t\tPlayer2\n");
                 stack = new List<Card>();
                 FlipCard();
             }
@@ -90,6 +93,8 @@ namespace GameOfWar
 
         private void FlipCard()
         {
+            //flip the top cards of each deck and add them to stack while dequeuing them from their decks
+            //stack is the collection of all cards that would be won by a player (including in Wars)
             Card card1, card2;
 
             card1 = player1.getLibrary().Dequeue();
@@ -97,7 +102,7 @@ namespace GameOfWar
             Console.Write("\t\t");
             card2 = player2.getLibrary().Dequeue();
             card2.showCard();
-            Console.WriteLine();
+            Console.WriteLine("\n");
 
             stack.Add(card1);
             stack.Add(card2);
@@ -105,14 +110,14 @@ namespace GameOfWar
             if (card1.Rank > card2.Rank)
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Player 1 wins this round!");
+                Console.WriteLine("Player 1 wins this round!\n");
                 Console.ForegroundColor = ConsoleColor.White;
                 stack.ForEach(c => player1.getLibrary().Enqueue(c));
             }
             else if (card1.Rank < card2.Rank)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("Player 2 wins this round!");
+                Console.WriteLine("Player 2 wins this round!\n");
                 Console.ForegroundColor = ConsoleColor.White;
                 stack.ForEach(c => player2.getLibrary().Enqueue(c));
             }
@@ -122,7 +127,7 @@ namespace GameOfWar
                 //Have to be careful if there's an empty deck (handle that exception) NOTE: Just check for "count == 1" instead and then DONT do the thing\
                 //What happens during a tie AND NO MORE CARDS?
                 //No official ruling, will thus assume that if starting a new war and the player runs out of cards, they'll use the last card drawn, but if that results in a tie they will lose
-                Console.Out.WriteLine("WAR HAS BEEN DECLARED!");
+                Console.Out.WriteLine("WAR HAS BEEN DECLARED!\n");
                 War();
             }
             //This just displays who ran out of cards during a war
@@ -130,10 +135,10 @@ namespace GameOfWar
             else
             {
                 String player = (player1.getLibrary().Count > 0) ? "Player 2" : "Player 1";
-                Console.Out.WriteLine($"{player} has run out of cards and is unable to commence war.");
+                Console.Out.WriteLine($"{player} has run out of cards and is unable to commence war.\n");
             }
 
-            Console.WriteLine($"P1: {player1.getLibrary().Count} cards\tP2: {player2.getLibrary().Count} cards");
+            Console.WriteLine($"P1: {player1.getLibrary().Count} cards\tP2: {player2.getLibrary().Count} cards\n");
             Upkeep();
         }
 
@@ -147,9 +152,10 @@ namespace GameOfWar
                 if (player1.getLibrary().Count > 1)
                 {
                     Card c = player1.getLibrary().Dequeue();
-                    c.showCard(); Console.Write(" ");
+                    c.showCard();
                     stack.Add(c);
                 }
+                Console.Write(" ");
             }
             Console.Write("\t");
             for (int x = 0; x < warCount; x++)
@@ -157,11 +163,12 @@ namespace GameOfWar
                 if (player2.getLibrary().Count > 1)
                 {
                     Card c = player2.getLibrary().Dequeue();
-                    c.showCard(); Console.Write(" ");
+                    c.showCard();
                     stack.Add(c);
                 }
+                Console.Write(" ");
             }
-            Console.WriteLine("");
+            Console.WriteLine("\n");
             FlipCard();
         }
     }

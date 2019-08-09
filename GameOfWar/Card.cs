@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace GameOfWar
 {
@@ -31,8 +32,12 @@ namespace GameOfWar
             ConsoleColor suitColor = ConsoleColor.White;
 
             //change any rank higher than 10 into its coresponding letter
+            //whether or not I implement a "1 or 14" option for ace, this will be able to display it either way, not that it changes the game at all
             switch(Rank)
             {
+                case 1:
+                    face = "A";
+                    break;
                 case 11:
                     face = "J";
                     break;
@@ -51,30 +56,37 @@ namespace GameOfWar
             }
 
             //Change the color of the "card" to match its suit
+            //the suitColor will change if classicColors is true or false in the App.config
             switch(Suit)
             {
                 case Suit.Diamonds:
-                    suitColor = ConsoleColor.Red;
+                    suitColor = ConsoleColor.Red; //no classicColors check since it would be red anyways
                     face += "\u2666";
                     break;
                 case Suit.Spades:
-                    suitColor = ConsoleColor.Cyan;
+                    suitColor = Convert.ToBoolean(ConfigurationManager.AppSettings["classicColors"]) ? ConsoleColor.Black : ConsoleColor.Blue;
+                    //suitColor = ConsoleColor.Cyan;
                     face += "\u2660";
                     break;
                 case Suit.Hearts:
-                    suitColor = ConsoleColor.Magenta;
+                    suitColor = Convert.ToBoolean(ConfigurationManager.AppSettings["classicColors"]) ? ConsoleColor.Red : ConsoleColor.Magenta;
+                    //suitColor = ConsoleColor.Magenta;
                     face += "\u2665";
                     break;
                 case Suit.Clubs:
-                    suitColor = ConsoleColor.DarkCyan;
+                    suitColor = Convert.ToBoolean(ConfigurationManager.AppSettings["classicColors"]) ? ConsoleColor.Black : ConsoleColor.DarkCyan;
+                    //suitColor = ConsoleColor.DarkCyan;
                     face += "\u2663";
                     break;
             }
             //changes the color that will be displayed for the card for quick readability of suit (not that it matters for the game)
             //colors could instead be red and black (with white background for black)
-            Console.ForegroundColor = suitColor; 
+            Console.ForegroundColor = suitColor;
+           // if (Convert.ToBoolean(ConfigurationManager.AppSettings["classicColors"]))
+            Console.BackgroundColor = ConsoleColor.White;
             Console.Write(face); 
             Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
         }
     }
 }

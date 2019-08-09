@@ -14,8 +14,16 @@ namespace GameOfWar
 
     class Program
     {
+        //instantiate constants (note I'd like to do this with a config)
+        public const int warCount = 3;
+        public const int turnCount = 1000;
+
         static void Main(string[] args)
         {
+            //At home and various other machines, UTF8 worked
+            //At one computer (on Windows 7) it required Unicode
+            Console.OutputEncoding = System.Text.Encoding.ASCII;
+
             new Game();
         }
     }

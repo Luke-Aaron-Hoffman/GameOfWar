@@ -12,3 +12,10 @@ D:\Luke\Documents\GitHub\GameOfWar\GameOfWar\obj\Debug\GameOfWar.csprojAssemblyR
 D:\Luke\Documents\GitHub\GameOfWar\GameOfWar\obj\Debug\GameOfWar.csproj.CoreCompileInputs.cache
 D:\Luke\Documents\GitHub\GameOfWar\GameOfWar\obj\Debug\GameOfWar.exe
 D:\Luke\Documents\GitHub\GameOfWar\GameOfWar\obj\Debug\GameOfWar.pdb
+C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\GameOfWar\bin\Debug\GameOfWar.exe.config
+C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\GameOfWar\bin\Debug\GameOfWar.exe
+C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\GameOfWar\bin\Debug\GameOfWar.pdb
+C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\GameOfWar\obj\Debug\GameOfWar.csprojResolveAssemblyReference.cache
+C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\GameOfWar\obj\Debug\GameOfWar.csproj.CoreCompileInputs.cache
+C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\GameOfWar\obj\Debug\GameOfWar.exe
+C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\GameOfWar\obj\Debug\GameOfWar.pdb
