@@ -22,3 +22,6 @@ C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\GameOfW
 C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\Executable\GameOfWar.exe.config
 C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\Executable\GameOfWar.exe
 C:\Users\lhoffman1\Desktop\PERSONAL STUFF\Job Search\GameOfWar\GameOfWar\Executable\GameOfWar.pdb
+D:\Luke\Documents\GitHub\GameOfWar\Executable\GameOfWar.exe.config
+D:\Luke\Documents\GitHub\GameOfWar\Executable\GameOfWar.exe
+D:\Luke\Documents\GitHub\GameOfWar\Executable\GameOfWar.pdb
