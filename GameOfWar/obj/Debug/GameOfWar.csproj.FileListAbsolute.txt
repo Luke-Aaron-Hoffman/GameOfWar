@@ -8,7 +8,6 @@ C:\Users\Luke\source\repos\GameOfWar\GameOfWar\obj\Debug\GameOfWar.pdb
 D:\Luke\Documents\GitHub\GameOfWar\GameOfWar\bin\Debug\GameOfWar.exe.config
 D:\Luke\Documents\GitHub\GameOfWar\GameOfWar\bin\Debug\GameOfWar.exe
 D:\Luke\Documents\GitHub\GameOfWar\GameOfWar\bin\Debug\GameOfWar.pdb
-D:\Luke\Documents\GitHub\GameOfWar\GameOfWar\obj\Debug\GameOfWar.csprojAssemblyReference.cache
 D:\Luke\Documents\GitHub\GameOfWar\GameOfWar\obj\Debug\GameOfWar.csproj.CoreCompileInputs.cache
 D:\Luke\Documents\GitHub\GameOfWar\GameOfWar\obj\Debug\GameOfWar.exe
 D:\Luke\Documents\GitHub\GameOfWar\GameOfWar\obj\Debug\GameOfWar.pdb
