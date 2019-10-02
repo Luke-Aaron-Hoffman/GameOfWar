@@ -60,22 +60,22 @@ namespace GameOfWar
             {
                 case Suit.Diamonds:
                     suitColor = ConsoleColor.Red; //no classicColors check since it would be red anyways
-                    face += "\u2666";
+                    face += Properties.Settings.Default.displaySuitAsSymbol ? "\u2666" : "D";
                     break;
                 case Suit.Spades:
                     suitColor = Properties.Settings.Default.classicColors ? ConsoleColor.Black : ConsoleColor.Blue;
                     //suitColor = ConsoleColor.Cyan;
-                    face += "\u2660";
+                    face += Properties.Settings.Default.displaySuitAsSymbol ? "\u2660" : "S";
                     break;
                 case Suit.Hearts:
                     suitColor = Properties.Settings.Default.classicColors ? ConsoleColor.Red : ConsoleColor.Magenta;
                     //suitColor = ConsoleColor.Magenta;
-                    face += "\u2665";
+                    face += Properties.Settings.Default.displaySuitAsSymbol ? "\u2665" : "H";
                     break;
                 case Suit.Clubs:
                     suitColor = Properties.Settings.Default.classicColors ? ConsoleColor.Black : ConsoleColor.DarkCyan;
                     //suitColor = ConsoleColor.DarkCyan;
-                    face += "\u2663";
+                    face += Properties.Settings.Default.displaySuitAsSymbol ? "\u2663" : "C";
                     break;
             }
             //changes the color that will be displayed for the card for quick readability of suit (not that it matters for the game)
