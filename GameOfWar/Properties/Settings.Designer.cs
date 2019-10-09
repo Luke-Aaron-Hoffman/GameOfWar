@@ -61,10 +61,19 @@ namespace GameOfWar.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool displaySuitAsSymbol {
             get {
                 return ((bool)(this["displaySuitAsSymbol"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool highCardOnlyWar {
+            get {
+                return ((bool)(this["highCardOnlyWar"]));
             }
         }
     }

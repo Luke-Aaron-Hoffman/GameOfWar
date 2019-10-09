@@ -11,49 +11,63 @@ namespace GameOfWar
     {
         private int warCount = Properties.Settings.Default.warCount;
         private int turnCount = Properties.Settings.Default.turnCount;
-        private int turns;
+        private bool highCardOnly = Properties.Settings.Default.highCardOnlyWar;
+        private int turns, playerCount;
 
         private Deck deck;
-        private Deck player1;
-        private Deck player2;
+        private List<Player> players;
         private List<Card> stack; //will be used for "winning cards" and appending them to queues quickly and neatly
 
         public Game()
         {
+            playerCount =0;
+
             warCount = warCount > 0 ? warCount : 3; //if warCount is 0 or less, it defaults to 3
             turnCount = turnCount > 0 ? turnCount : 50; //...defaults to 50
-            Console.Out.WriteLine("Welcome to War!");
-            Console.Out.WriteLine("\nAll you have to do is press any key to keep proceeding through the game. You will be Player 1, and the Computer will be Player 2. Good luck!");
+            highCardOnly = highCardOnly ? highCardOnly : false; //Simply defaults highCardOnly to false if it's "not true" -- is this even needed?
+            Console.WriteLine("Welcome to War!");
+            
 
             StartGame();
         }
 
         private void StartGame()
         {
-            deck = new Deck();
-            int deckSize = deck.getLibrary().Count;
-            player1 = new Deck();
-            player2 = new Deck();
+            Console.WriteLine("\nType in how many players you would like to play with. You will be Player 1.");
+            Console.Write("\n(Note: For every instance of 4 players, you will be given a new deck to increase how many cards there are.\n" +
+                "All players get the same amount of cards, so some cards may be left out after the initial deck is shuffled.\n" +
+                "\nPlayer Amount: ");
+
+            while (playerCount <= 1)
+            {
+                try { playerCount = Convert.ToInt32(Console.In.ReadLine().Trim()); } catch (Exception ex) { Console.Out.WriteLine("Please input a valid number."); break; }
+
+                if (playerCount < 1)
+                {
+                    Console.WriteLine("\nPlease input a number greater than 0.");
+                    Console.Write("\nPlayer Amount: ");
+                }
+                if (playerCount == 1)
+                {
+                    Console.WriteLine("\nCongrats, you win! Now how about trying again with more than 1 player?");
+                    Console.Write("\nPlayer Amount: ");
+                }
+            }
+            players = new List<Player>();
+            deck = new Deck(playerCount);
+            List<Deck> decks = deck.Deal();
+
+            for(int i=0;i<playerCount;i++)
+            {
+                players.Add(new Player(i+1,decks[i]));
+            }
+
             stack = new List<Card>();
             turns = 0;
 
+            Console.WriteLine("\nYour game is now ready!");
+
             deck.Shuffle();
-
-            Queue<Card> deck1 = new Queue<Card>();
-            Queue<Card> deck2 = new Queue<Card>();
-
-            //pops out the first {getLibrary.Count/2} cards and puts them into deck1 (which will be assiend to player1)
-            for (int x = 0; x < deckSize/2; x++)
-            {
-                deck1.Enqueue(deck.getLibrary().Dequeue());
-            }
-            player1.setLibrary(deck1);
-            //pops out the last {getLibrary.Count/2} cards. This could cause errors if the deck size is odd, but there should never be an instance like that
-            for (int x = 0; x < deckSize/2; x++)
-            {
-                deck2.Enqueue(deck.getLibrary().Dequeue());
-            }
-            player2.setLibrary(deck2);
 
             Upkeep();
         }
@@ -61,114 +75,165 @@ namespace GameOfWar
         private void Upkeep()
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Out.WriteLine("Press a key to continue...");
+            Console.WriteLine("Press a key to continue...");
             Console.ForegroundColor = ConsoleColor.White;
+
+            if (turns >= turnCount)
+            {
+                Console.Clear();
+                Console.WriteLine("Sorry, but this game is taking too long. There are no winners. You may try again.");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("Press a key to continue...");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
 
             Console.ReadKey();
             Console.Clear();
             turns++;
 
-            if(player1.getLibrary().Count<=0)
-            {
-                Console.Out.WriteLine("Sorry, but you have lost. Press any key to play again.");
-            }
-            else if(player2.getLibrary().Count<=0)
-            {
-                Console.Out.WriteLine("Congratulations, you have won! Press any key to play again.");
-            }
-            else if(turns>turnCount)
-            {
-                Console.Out.WriteLine("Unfortunately this game is too long, let's restart. Press any key to play again.");
-            }
-            else
-            {
-                Console.WriteLine("Player1\t\tPlayer2\n");
-                stack = new List<Card>();
-                FlipCard();
-            }
+            if(turns<turnCount)
+                checkPlayers();
 
             StartGame();
         }
 
-        private void FlipCard()
+        public void checkPlayers()
+        {
+            turns++;
+            List<Player> deadPlayers = new List<Player>();
+            for (int x=0;x<players.Count;x++)
+            {
+                if (players[x].getLibrary().Count<=0)
+                {
+                    if (x<=0)
+                    {
+                        Console.WriteLine("\nSorry, but you have been eliminated. Press any key to play again.");
+                        return;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"\nPlayer {x+1} has been eliminated.");
+                        deadPlayers.Add(players[x]);
+                    }
+                }
+            }
+            if(players.Count<=1)
+            {
+                Console.WriteLine("\nCongratulations! You won! If you would like, you may start a new game.");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("\nPress a key to continue...");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.ReadKey();
+                Console.Clear();
+                StartGame();
+            }
+            foreach(Player p in deadPlayers)
+            { players.Remove(p); }
+            stack = new List<Card>();
+
+            Console.Out.WriteLine("Current deck sizes:");
+            foreach(Player p in players)
+            {
+                p.fightCard = null;
+                p.stack.Clear();
+                Console.Out.WriteLine($"Player {p.playerNumber}: {p.getLibrary().Count}");
+            }
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("\nPress a key to continue...");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.ReadKey();
+            Console.Clear();
+
+            FlipCard(players);
+        }
+
+        private void FlipCard(List<Player> warPlayers)
         {
             //flip the top cards of each deck and add them to stack while dequeuing them from their decks
             //stack is the collection of all cards that would be won by a player (including in Wars)
-            Card card1, card2;
-
-            card1 = player1.getLibrary().Dequeue();
-            card1.showCard();
-            Console.Write("\t\t");
-            card2 = player2.getLibrary().Dequeue();
-            card2.showCard();
-            Console.WriteLine("\n");
-
-            stack.Add(card1);
-            stack.Add(card2);
-
-            if (card1.Rank > card2.Rank)
+            Card winningCard = null;
+            List<Player> winningPlayers = new List<Player>();
+            foreach(Player p in warPlayers)
             {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Player 1 wins this round!\n");
-                Console.ForegroundColor = ConsoleColor.White;
-                stack.ForEach(c => player1.getLibrary().Enqueue(c));
+                try
+                {
+                    p.fightCard = p.getLibrary().Dequeue();
+                    stack.Add(p.fightCard);
+                    p.stack.Add(new List<Card> { p.fightCard });
+
+                    if (winningCard is null || p.fightCard.Rank > winningCard.Rank)
+                    {
+                        winningPlayers.Clear();
+                        winningPlayers.Add(p);
+                        winningCard = p.fightCard;
+                    }
+                    else if (p.fightCard.Rank == winningCard.Rank)
+                    {
+                        winningPlayers.Add(p);
+                    }
+                }
+                catch(InvalidOperationException ex)
+                {
+                    Console.WriteLine($"Player {p.playerNumber} has run out of cards and will be eliminated after this war.\n");
+                }
             }
-            else if (card1.Rank < card2.Rank)
+
+            if (winningPlayers.Count <= 1)
             {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("Player 2 wins this round!\n");
-                Console.ForegroundColor = ConsoleColor.White;
-                stack.ForEach(c => player2.getLibrary().Enqueue(c));
+                foreach(Player p in players)
+                {
+                    Console.WriteLine("Player " + p.playerNumber.ToString());
+                    foreach(List<Card> pStack in p.stack)
+                    {
+                        foreach(Card c in pStack)
+                        {
+                            c.showCard();
+                            Console.Write(" ");
+                        }
+                        Console.Write("| ");
+                    }
+                    Console.WriteLine("");
+                }
+
+                Console.WriteLine($"Player {winningPlayers[0].playerNumber} wins this round!");
+                stack.ForEach(c => winningPlayers[0].getLibrary().Enqueue(c));
             }
-            //check if either player has no cards (cannot do a war with 0 cards)
-            else if(player1.getLibrary().Count*player2.getLibrary().Count != 0)
-            {
-                //Have to be careful if there's an empty deck (handle that exception) NOTE: Just check for "count == 1" instead and then DONT do the thing\
-                //What happens during a tie AND NO MORE CARDS?
-                //No official ruling, will thus assume that if starting a new war and the player runs out of cards, they'll use the last card drawn, but if that results in a tie they will lose
-                Console.Out.WriteLine("WAR HAS BEEN DECLARED!\n");
-                War();
-            }
-            //This just displays who ran out of cards during a war
-            //in particular, this else statement happens when the currently pulled cards are equal AND someone's deck is empty
             else
             {
-                String player = (player1.getLibrary().Count > 0) ? "Player 2" : "Player 1";
-                Console.Out.WriteLine($"{player} has run out of cards and is unable to commence war.\n");
+                Console.Out.WriteLine("WAR HAS BEEN DECLARED!\n");
+                if (highCardOnly)
+                    War(winningPlayers);
+                else
+                    War(players);
             }
 
-            Console.WriteLine($"P1: {player1.getLibrary().Count} cards\tP2: {player2.getLibrary().Count} cards\n");
+            checkPlayers();
             Upkeep();
         }
 
-        private void War()
+        private void War(List<Player> warPlayers)
         {
             //put the next {warCount} cards (EXCEPT LAST CARD OF DECK) into the stack
             //the reason that stack is a list is so we can use the "foreach" method to Enqueue the stack quickly
-            //while testing, remember that in the event of a single war, the player who wins "removes" 5 cards, but wins "10 cards," resulting in a net gain of 5
-            for (int x = 0; x < warCount; x++)
+            //while testing, remember that in the event of a single war, the player who wins "removes" 5 cards, but wins "10 cards," resulting in a net gain of 5\
+            List<Card> tempDeck;
+            foreach(Player p in warPlayers)
             {
-                if (player1.getLibrary().Count > 1)
+                tempDeck = new List<Card>();
+                try
                 {
-                    Card c = player1.getLibrary().Dequeue();
-                    c.showCard();
-                    stack.Add(c);
+                    for (int i = 0; i < warCount; i++)
+                    {
+                        tempDeck.Add(p.getLibrary().Dequeue());
+                        stack.Add(tempDeck[i]);
+                    }
+                    p.stack.Add(tempDeck);
                 }
-                Console.Write(" ");
+                catch (Exception ex) { }
             }
-            Console.Write("\t");
-            for (int x = 0; x < warCount; x++)
-            {
-                if (player2.getLibrary().Count > 1)
-                {
-                    Card c = player2.getLibrary().Dequeue();
-                    c.showCard();
-                    stack.Add(c);
-                }
-                Console.Write(" ");
-            }
-            Console.WriteLine("\n");
-            FlipCard();
+            
+            FlipCard(warPlayers);
         }
     }
 }
