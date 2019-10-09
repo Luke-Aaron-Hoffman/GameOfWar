@@ -48,3 +48,8 @@ https://github.com/Luke-Aaron-Hoffman/GameOfWar/blob/master/High%20Card%20Only%2
 If a player runs out in the middle of a war, even during one that they started, they are now immediately marked for elimination (the term "marked" is used because the actual elimination happens after the entire war has been displaed, including the current character being eliminated). This can be seen here in the following picture.
 
 https://github.com/Luke-Aaron-Hoffman/GameOfWar/blob/master/Losing%20Cards%20in%20a%20War%20Now%20Eliminates%20You.PNG
+
+### Bugs/TODO
+CUrrently, due to how Wars are structured, if anyone in a war runs out in the middle of it, they will be marked for elimination until a War ends. It is possible due to this that a War might result in every player being "eliminated" (Which results in the loss for whoever is running the game, i.e. player 1). This is because to handle displaying multiple player's stacks of cards in an orderly fashion, a List of Lists has been created to seperate the single cards from the cards during a war, and an error is thrown when the last card is attempted to be dequeud.
+
+Possible fixes I think will work as the game did before (i.e. if you run out during a war, you use your last card for the war, but if a new war starts then you are simply out) is by checking to see if one card is left in a player's deck during the war function and not doing anything if that's the case. THen when the actual "fight" starts, the player only has one card left and can attempt the fight. If a new war would start then they will be eliminated due to checks that will occur before the war function.
