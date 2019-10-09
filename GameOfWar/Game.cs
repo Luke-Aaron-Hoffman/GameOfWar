@@ -20,14 +20,11 @@ namespace GameOfWar
 
         public Game()
         {
-            playerCount =0;
-
             warCount = warCount > 0 ? warCount : 3; //if warCount is 0 or less, it defaults to 3
             turnCount = turnCount > 0 ? turnCount : 50; //...defaults to 50
             highCardOnly = highCardOnly ? highCardOnly : false; //Simply defaults highCardOnly to false if it's "not true" -- is this even needed?
             Console.WriteLine("Welcome to War!");
             
-
             StartGame();
         }
 
@@ -37,6 +34,7 @@ namespace GameOfWar
             Console.Write("\n(Note: For every instance of 4 players, you will be given a new deck to increase how many cards there are.\n" +
                 "All players get the same amount of cards, so some cards may be left out after the initial deck is shuffled.\n" +
                 "\nPlayer Amount: ");
+            playerCount = 0;
 
             while (playerCount <= 1)
             {
@@ -230,7 +228,7 @@ namespace GameOfWar
                     }
                     p.stack.Add(tempDeck);
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { p.stack.Add(tempDeck); }
             }
             
             FlipCard(warPlayers);
